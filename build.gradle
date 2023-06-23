@@ -1,0 +1,321 @@
+plugins {
+	id 'java'
+	id 'java-library'
+	id 'org.springframework.boot' version '2.7.12'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'com.epages.restdocs-api-spec' version '0.17.1'
+}
+
+allprojects {
+	group = 'com.joara'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	repositories {
+		mavenCentral()
+	}
+
+	bootJar {
+		enabled = false
+	}
+}
+
+subprojects {
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+		// Lombok
+		compileOnly 'org.projectlombok:lombok'
+		testCompileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+
+		// Logging
+		implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+		implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+
+		// JSON
+		implementation 'com.google.code.gson:gson:2.10.1'
+
+		// RestDoc as Open API
+		implementation "org.springdoc:springdoc-openapi-ui:1.6.14"
+		testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
+	}
+
+	// rest docs open api
+	openapi3 {
+		println("project.rootProject.rootDir: $project.rootProject.rootDir")
+		println("project.name: ${project.name}")
+
+		switch(project.name) {
+			case 'authentication-service':
+				server = System.getenv('AUTH_SERVER_URL') ?: 'http://localhost:8080'
+				break
+			case 'book-service':
+				server = System.getenv('BOOK_SERVER_URL') ?: 'http://localhost:8090'
+				break
+			default:
+				server = 'http://localhost:8080'
+		}
+
+		title = 'My API'
+		description = 'My API description'
+		tagDescriptionsPropertiesFile = "${project.rootProject.projectDir}/docs/tag-descriptions.yml"
+		version = '0.1.0'
+		format = 'json'
+		outputDirectory = 'src/main/resources/static/docs'
+		outputFileNamePrefix = "openapi3.${project.name}"
+
+		project.mkdir "${project.projectDir}/${outputDirectory}"
+	}
+
+	jar {
+		enabled = true
+	}
+
+	// .java -> Compile Time -> .class -> Runtime (-> machine code)
+
+	// Compile Time VM Options (1)
+	compileJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// Compile Time VM Options (2)
+	compileTestJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// Compile Time VM Options (3)
+	test {
+		useJUnitPlatform()
+		jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+	}
+}
+
+// === Auth Service ====================================================================================================
+
+// NOTE this module is for execution. All required beans must be included.
+project(':authentication-service') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+		implementation project(':authentication-service:driven:rdb-adapter')
+		implementation project(':authentication-service:driving:web-adapter')
+		implementation project(':authentication-service:driving:internal-api-adapter')
+
+		implementation project(':base-modules:joara-global-exception-handler')
+		implementation project(':base-modules:joara-integrated-flyway')
+
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+	}
+
+	bootJar {
+		enabled = true
+	}
+}
+
+project(':authentication-service:driving:web-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
+	}
+}
+
+project(':authentication-service:driving:internal-api-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+	}
+}
+
+project(':authentication-service:driven:rdb-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+		implementation project(':base-modules:joara-jpa-base')
+		implementation project(':base-modules:joara-integrated-flyway')
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	}
+}
+
+project(':authentication-service:application') {
+	dependencies {
+		// NOTE: Rule: NO ADAPTER INCLUDED
+		implementation project(':common')
+		api project(':authentication-service:application:domain')
+		api project(':authentication-service:application:read-models')
+		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+		// jwt
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-gson:0.11.5'
+	}
+}
+
+project(':authentication-service:application:domain') {
+	dependencies {
+		implementation project(':common')
+	}
+}
+
+project(':authentication-service:application:read-models') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application:domain')
+	}
+}
+
+// === Book Service ====================================================================================================
+
+project(':book-service') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':book-service:adapters:rdb-adapter')
+		implementation project(':book-service:adapters:web-adapter')
+		implementation project(':book-service:adapters:client-adapters:joara-member-client')
+
+		implementation project(':base-modules:joara-global-exception-handler')
+		implementation project(':base-modules:joara-integrated-flyway')
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+	}
+
+	bootJar {
+		enabled = true
+	}
+}
+
+project(':book-service:adapters:web-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
+		implementation project(':authentication-service:application:read-models')
+	}
+}
+
+project(':book-service:adapters:rdb-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':base-modules:joara-jpa-base')
+		implementation project(':base-modules:joara-integrated-flyway')
+		implementation project(':book-service:application:read-model')
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	}
+}
+
+project(':book-service:adapters:client-adapters:joara-member-client') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':authentication-service:application:read-models')
+		implementation project(':base-modules:joara-server-communication-core')
+	}
+}
+
+project(':book-service:application') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':base-modules:joara-file-uploader')
+		implementation project(':base-modules:joara-jwt-parser')
+		implementation project(':authentication-service:application:read-models')
+		implementation project(':book-service:application:read-model')
+
+		api project(':book-service:application:domain')
+		api 'org.springframework.data:spring-data-commons'
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	}
+}
+
+project(':book-service:application:domain') {
+	dependencies {
+		implementation project(':common')
+	}
+}
+
+project(':book-service:application:read-model') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application:domain')
+	}
+}
+
+// === Base Modules ====================================================================================================
+
+project(':base-modules:joara-jpa-base') {
+	dependencies {
+		api 'org.springframework.boot:spring-boot-starter-data-jpa'
+	}
+}
+
+project(':base-modules:joara-global-exception-handler') {
+	dependencies {
+		api project(':common')
+	}
+}
+
+project(':base-modules:joara-jwt-parser') {
+	dependencies {
+		implementation project(':common')
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// jwt
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-gson:0.11.5'
+	}
+}
+
+project(':base-modules:joara-integrated-flyway') { // 초창기 전략: 통합 DB 채택 -> ... (대신 이것을 유지하는 동안 모든 서버 재배포) -> 점진적으로 디비를 나눠 가는 선택을 할 수 있음.
+	dependencies {
+		api 'org.flywaydb:flyway-core' // api는 비권장. 그럼에도 불구하고 쓴 이유? -> 사람이 심장은 달고 다녀야 함.
+	}
+}
+
+project(':base-modules:joara-server-communication-core') {
+	dependencies {
+
+	}
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="springboot-root.base-modules.joara-server-communication-core.test" />
+        <module name="springboot-root.common.test" />
+        <module name="springboot-root.authentication-service.driving.internal-api-adapter.test" />
+        <module name="springboot-root.book-service.adapters.test" />
+        <module name="springboot-root.book-service.application.read-model.test" />
+        <module name="springboot-root.authentication-service.driving.web-adapter.test" />
+        <module name="springboot-root.authentication-service.test" />
+        <module name="springboot-root.base-modules.joara-jpa-base.test" />
+        <module name="springboot-root.authentication-service.application.test" />
+        <module name="springboot-root.base-modules.joara-file-uploader.test" />
+        <module name="springboot-root.authentication-service.driving.test" />
+        <module name="springboot-root.book-service.adapters.rdb-adapter.test" />
+        <module name="springboot-root.base-modules.test" />
+        <module name="springboot-root.book-service.adapters.client-adapters.test" />
+        <module name="springboot-root.authentication-service.driven.test" />
+        <module name="springboot-root.base-modules.joara-jwt-parser.test" />
+        <module name="springboot-root.book-service.application.test" />
+        <module name="springboot-root.authentication-service.driven.rdb-adapter.test" />
+        <module name="springboot-root.book-service.application.domain.test" />
+        <module name="springboot-root.book-service.adapters.client-adapters.joara-member-client.test" />
+        <module name="springboot-root.base-modules.joara-global-exception-handler.test" />
+        <module name="springboot-root.base-modules.joara-integrated-flyway.test" />
+        <module name="springboot-root.book-service.adapters.web-adapter.test" />
+        <module name="springboot-root.board-service.test" />
+        <module name="springboot-root.authentication-service.application.domain.test" />
+        <module name="springboot-root.authentication-service.application.read-models.test" />
+        <module name="springboot-root.book-service.test" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.12/5a6e41b3c5b2e52dcc05c2ebfc408e218d73075e/spring-boot-configuration-processor-2.7.12.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="springboot-root.authentication-service.application.read-models.main" />
+        <module name="springboot-root.base-modules.joara-integrated-flyway.main" />
+        <module name="springboot-root.authentication-service.application.domain.main" />
+        <module name="springboot-root.base-modules.main" />
+        <module name="springboot-root.base-modules.joara-global-exception-handler.main" />
+        <module name="springboot-root.base-modules.joara-jpa-base.main" />
+        <module name="springboot-root.base-modules.joara-server-communication-core.main" />
+        <module name="springboot-root.authentication-service.driving.web-adapter.main" />
+        <module name="springboot-root.authentication-service.main" />
+        <module name="springboot-root.authentication-service.driving.main" />
+        <module name="springboot-root.book-service.application.read-model.main" />
+        <module name="springboot-root.common.main" />
+        <module name="springboot-root.book-service.adapters.main" />
+        <module name="springboot-root.book-service.adapters.client-adapters.joara-member-client.main" />
+        <module name="springboot-root.authentication-service.driving.internal-api-adapter.main" />
+        <module name="springboot-root.book-service.main" />
+        <module name="springboot-root.board-service.main" />
+        <module name="springboot-root.base-modules.joara-file-uploader.main" />
+        <module name="springboot-root.book-service.adapters.client-adapters.main" />
+        <module name="springboot-root.authentication-service.driven.main" />
+        <module name="springboot-root.base-modules.joara-jwt-parser.main" />
+        <module name="springboot-root.book-service.adapters.web-adapter.main" />
+        <module name="springboot-root.book-service.application.domain.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.12/5a6e41b3c5b2e52dcc05c2ebfc408e218d73075e/spring-boot-configuration-processor-2.7.12.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.5.3.Final/dce418bedafd71ff8dd2cef15006c0fee788b073/mapstruct-processor-1.5.3.Final.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok-mapstruct-binding/0.2.0/2f1cf9ced7b720ba4996c942b816669e63f0fa4f/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="springboot-root.book-service.application.main" />
+        <module name="springboot-root.book-service.adapters.rdb-adapter.main" />
+        <module name="springboot-root.authentication-service.application.main" />
+        <module name="springboot-root.authentication-service.driven.rdb-adapter.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="17" />
+  </component>
+</project>

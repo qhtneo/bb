@@ -1,0 +1,6 @@
+app:
+  upload:
+    files:
+      target: local
+      upload-url: ../
+#      upload-url: ${upload.url:/Users/Shared/upload-image}

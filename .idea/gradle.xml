@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="17" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/authentication-service" />
+            <option value="$PROJECT_DIR$/authentication-service/application" />
+            <option value="$PROJECT_DIR$/authentication-service/application/domain" />
+            <option value="$PROJECT_DIR$/authentication-service/application/read-models" />
+            <option value="$PROJECT_DIR$/authentication-service/driven" />
+            <option value="$PROJECT_DIR$/authentication-service/driven/rdb-adapter" />
+            <option value="$PROJECT_DIR$/authentication-service/driving" />
+            <option value="$PROJECT_DIR$/authentication-service/driving/internal-api-adapter" />
+            <option value="$PROJECT_DIR$/authentication-service/driving/web-adapter" />
+            <option value="$PROJECT_DIR$/base-modules" />
+            <option value="$PROJECT_DIR$/base-modules/joara-file-uploader" />
+            <option value="$PROJECT_DIR$/base-modules/joara-global-exception-handler" />
+            <option value="$PROJECT_DIR$/base-modules/joara-integrated-flyway" />
+            <option value="$PROJECT_DIR$/base-modules/joara-jpa-base" />
+            <option value="$PROJECT_DIR$/base-modules/joara-jwt-parser" />
+            <option value="$PROJECT_DIR$/base-modules/joara-server-communication-core" />
+            <option value="$PROJECT_DIR$/board-service" />
+            <option value="$PROJECT_DIR$/book-service" />
+            <option value="$PROJECT_DIR$/book-service/adapters" />
+            <option value="$PROJECT_DIR$/book-service/adapters/client-adapters" />
+            <option value="$PROJECT_DIR$/book-service/adapters/client-adapters/joara-member-client" />
+            <option value="$PROJECT_DIR$/book-service/adapters/rdb-adapter" />
+            <option value="$PROJECT_DIR$/book-service/adapters/web-adapter" />
+            <option value="$PROJECT_DIR$/book-service/application" />
+            <option value="$PROJECT_DIR$/book-service/application/domain" />
+            <option value="$PROJECT_DIR$/book-service/application/read-model" />
+            <option value="$PROJECT_DIR$/common" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

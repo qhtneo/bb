@@ -1,0 +1,65 @@
+rootProject.name = 'springboot-root'
+
+// auth service
+include 'authentication-service'
+include 'authentication-service:driving'
+include 'authentication-service:driving:web-adapter'
+include 'authentication-service:driving:internal-api-adapter'
+findProject(':authentication-service:driving')?.name = 'driving'
+findProject(':authentication-service:driving:web-adapter')?.name = 'web-adapter'
+findProject(':authentication-service:driving:internal-api-adapter')?.name = 'internal-api-adapter'
+
+include 'authentication-service:driven'
+include 'authentication-service:driven:rdb-adapter'
+findProject(':authentication-service:driven')?.name = 'driven'
+findProject(':authentication-service:driven:rdb-adapter')?.name = 'rdb-adapter'
+
+include 'authentication-service:application'
+include 'authentication-service:application:domain'
+include 'authentication-service:application:read-models'
+findProject(':authentication-service:application')?.name = 'application'
+findProject(':authentication-service:application:domain')?.name = 'domain'
+findProject(':authentication-service:application:read-models')?.name = 'read-models'
+
+// base
+include 'base-modules'
+include 'base-modules:joara-file-uploader'
+findProject(':base-modules:joara-file-uploader')?.name = 'joara-file-uploader'
+include 'base-modules:joara-global-exception-handler'
+findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
+include 'base-modules:joara-integrated-flyway'
+findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
+include 'base-modules:joara-jpa-base'
+findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
+include 'base-modules:joara-jwt-parser'
+findProject(':base-modules:joara-jwt-parser')?.name = 'joara-jwt-parser'
+include 'base-modules:joara-server-communication-core'
+findProject(':base-modules:joara-server-communication-core')?.name = 'joara-server-communication-core'
+
+// board
+include 'board-service'
+
+// book service
+include 'book-service'
+include 'book-service:adapters'
+include 'book-service:adapters:web-adapter'
+include 'book-service:adapters:rdb-adapter'
+findProject(':book-service:adapters')?.name = 'adapters'
+findProject(':book-service:adapters:web-adapter')?.name = 'web-adapter'
+findProject(':book-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
+
+include 'book-service:adapters:client-adapters'
+include 'book-service:adapters:client-adapters:joara-member-client'
+findProject(':book-service:adapters:client-adapters')?.name = 'client-adapters'
+findProject(':book-service:adapters:client-adapters:joara-member-client')?.name = 'joara-member-client'
+
+include 'book-service:application'
+include 'book-service:application:domain'
+findProject(':book-service:application')?.name = 'application'
+findProject(':book-service:application:domain')?.name = 'domain'
+include 'book-service:application:read-model'
+findProject(':book-service:application:read-model')?.name = 'read-model'
+
+// common
+include 'common'
+
